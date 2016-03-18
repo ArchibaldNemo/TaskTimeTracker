@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Task Timer Tracker</title>
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+        <link href="bower_components/angular-xeditable/dist/css/xeditable.css" rel="stylesheet">
+    </head>
+
+    <body ng-app="taskTimeTracker">
+
+        <div ng-controller="TimerController as vm">
+
+           <div class="time-entry-comment task-input">
+                <form class="navbar-form">
+
+                    <div class="input-group task-rate-input">
+                        <input class="form-control" ng-model="vm.comment" placeholder="Над чем Вы сейчас работаете?"></input>
+                    </div>
+
+                    <div class="input-group task-rate-input">
+                        <span class="input-group-addon">Ставка</span>
+                        <input type="number" step="50" class="form-control"  ng-model="vm.rate" min="0" max="10000"></input>
+                        <span class="input-group-addon">руб./час</span>
+                    </div>
+
+                    <div class="input-group task-time-input">
+                        <timer interval="1000" auto-start="false">
+                            <span class="input-group-addon task-time-element-input"> {{hours}} часов</span>
+                            <span class="input-group-addon task-time-element-input">{{minutes}} минут</span>
+                            <span class="input-group-addon task-time-element-input">{{seconds}} секунд</span>
+                        </timer>
+                    </div>
+
+                    <button class="btn btn-primary" ng-click="vm.startTimer()"  ng-show="!vm.timerRunning">Поехали!</button>
+                    <button class="btn btn-primary" ng-click="vm.stopTimer()"  ng-show="vm.timerRunning">Приехали...</button>
+                </form>
+            </div>
+
+
+
+            <div class="col-sm-12">
+
+                <div class="well vm" ng-repeat="time in vm.timeRecords">
+                    <div class="row">
+                        <div class="col-sm-3 task-comment">
+                            <a ng-model="time.comment" href="#" editable-text="time.comment">{{ time.comment || "Без названия" }}</a>
+                        </div>
+
+                        <div class="col-sm-3 time-numbers task-rate">
+                            руб./час <a onaftersave="vm.updateHourlyRateHandler(time)"  href="#" editable-number="time.rate" e-min="0">{{ time.rate || '0' }}</a>
+                        </div>
+
+                        <div class="col-sm-3 time-numbers">
+                            <h4><span class="label label-default">
+                                {{time.time.hours == 0 ? '00' : time.time.hours < 10 ? '0'+ time.time.hours : time.time.hours}}:
+                                {{time.time.minutes == 0 ? '00' : time.time.minutes < 10 ? '0'+ time.time.minutes : time.time.minutes}}:
+                                {{time.time.seconds == 0 ? '00' : time.time.seconds < 10 ? '0'+ time.time.seconds : time.time.seconds}}
+                            </span></h4>
+                        </div>
+
+                        <div class="col-sm-2 time-numbers">
+                            <h4><span class="label label-default">{{time.taskCost}} руб.</span></h4>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </body>
+
+    <!-- Application Dependencies -->
+    <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+    <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script type="text/javascript" src="bower_components/moment/moment.js"></script>
+    <script type="text/javascript" src="bower_components/angular-timer/dist/angular-timer.js"></script>
+    <script type="text/javascript" src="bower_components/humanize-duration/humanize-duration.js"></script>
+    <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+    <script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
+
+    <!-- Application Scripts -->
+    <script type="text/javascript" src="scripts/app.js"></script>
+    <script type="text/javascript" src="scripts/controllers/TimerController.js"></script>
+    <script type="text/javascript" src="scripts/time.js"></script>
+
+</html>

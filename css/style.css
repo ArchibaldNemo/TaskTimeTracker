@@ -1,0 +1,44 @@
+.time-numbers > *, .time-entry > * {
+	display: inline-block;
+}
+
+.timepicker {
+	margin-right: 15px;
+}
+
+@media (min-width: 546px) {
+	.time-entry-comment {
+		position: relative;
+		top: 0px;
+	}
+}
+
+.task-comment {
+	top: 10px;
+}
+
+.task-rate {
+	top: 10px;
+}
+
+.task-input {
+	width: 70%;
+	margin: 0 auto;
+	min-width: 700px;
+}
+
+.task-rate-input {
+	width: 250px;
+}
+
+.task-comment-input {
+	width:250px;
+}
+
+.task-time-input {
+	width:200px;
+}
+.task-time-element-input {
+	height:34px;
+}
+
